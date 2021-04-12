@@ -30,10 +30,4 @@
   - Proposta adaptada de [Lun e Marioni
     (2017)](https://academic.oup.com/biostatistics/article/18/3/451/2970368).
 
-<!-- end list -->
-
-``` r
-knitr::include_graphics("./figures/tikz_simul.png")
-```
-
 <img src="./figures/tikz_simul.png" width="80%" />

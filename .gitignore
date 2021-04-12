@@ -1,0 +1,10 @@
+**/latex
+**/presentation
+**.Rproj.user
+**.Rhistory
+**.RData
+**.Ruserdata
+**.Rprofile
+**.h5
+**.rds
+.Rproj.user

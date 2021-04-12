@@ -1,0 +1,155 @@
+---
+title: "Testando simulação com 6 indíviduos"
+author: "André F. B. Menezes"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.height = 6, fig.width = 10)
+# Função para simular dados de scRNAseq
+source("../functions/simulating_scRNA_counts.R", encoding = "utf8")
+
+# Função para construir um objeto SCE
+source("../functions/construct_sce_object.R", encoding = "utf8")
+
+# Parâmetros estimados utilizando informação de 3 indivíduos
+
+parms_6_samples <- readRDS("../data/parms_6_samples.rds")
+```
+# Parâmetros
+
+- `n_genes`: 1000
+
+- `n_group`: 2, 3 e 4
+
+- `range_n_cells`: [200, 500]
+
+- `n_de`: 400
+
+- `fc`: 6
+
+
+## 2 grupos
+
+### Sem genes DE
+
+```{r sim_nde_g2}
+set.seed(6969)
+simul_not_de <- simulate_sce(estimated_parameters = parms_6_samples, 
+                             n_genes = 1000, n_group = 2, var_effect = 0.1,
+                             range_n_cells = c(200, 500))
+sce_not_de <- construct_sce(simul_obj = simul_not_de)
+```
+
+
+```{r, echo=FALSE}
+gridExtra::grid.arrange(
+  plotReducedDim(sce_not_de, dimred = "UMAP", colour_by = "group") +
+    ggtitle("Sem correção"),
+  plotReducedDim(sce_not_de, dimred = "UMAP_corrected", colour_by = "group") +
+    ggtitle("Com correção"),
+  ncol = 2
+)
+
+gridExtra::grid.arrange(
+  plotReducedDim(sce_not_de, dimred = "UMAP", colour_by = "individuo") +
+    ggtitle("Sem correção"),
+  plotReducedDim(sce_not_de, dimred = "UMAP_corrected", colour_by = "individuo") +
+    ggtitle("Com correção"),
+  ncol = 2
+)
+```
+
+### Com genes DE
+
+```{r sim_de_g2}
+set.seed(6969)
+simul_de <- simulate_sce(estimated_parameters = parms_6_samples, 
+                         n_genes = 1000, n_group = 2, pct_de = 0.4,
+                         var_effect = 0.1, fc = 6, range_n_cells = c(200, 500))
+sce_de <- construct_sce(simul_obj = simul_de)
+```
+
+```{r, echo=FALSE}
+gridExtra::grid.arrange(
+  plotReducedDim(sce_de, dimred = "UMAP", colour_by = "group") +
+    ggtitle("Sem correção"),
+  plotReducedDim(sce_de, dimred = "UMAP_corrected", colour_by = "group") +
+    ggtitle("Com correção"),
+  ncol = 2
+)
+
+gridExtra::grid.arrange(
+  plotReducedDim(sce_de, dimred = "UMAP", colour_by = "individuo") +
+    ggtitle("Sem correção"),
+  plotReducedDim(sce_de, dimred = "UMAP_corrected", colour_by = "individuo") +
+    ggtitle("Com correção"),
+  ncol = 2
+)
+```
+
+## 3 grupos
+
+### Sem genes DE
+
+```{r sim_nde_g3}
+set.seed(6969)
+simul_not_de_3 <- simulate_sce(estimated_parameters = parms_6_samples, 
+                               n_genes = 1000, n_group = 3, var_effect = 0.1,
+                               range_n_cells = c(200, 500))
+sce_not_de_3 <- construct_sce(simul_obj = simul_not_de_3)
+```
+
+
+```{r, echo=FALSE}
+gridExtra::grid.arrange(
+  plotReducedDim(sce_not_de_3, dimred = "UMAP", colour_by = "group") +
+    ggtitle("Sem correção"),
+  plotReducedDim(sce_not_de_3, dimred = "UMAP_corrected", colour_by = "group") +
+    ggtitle("Com correção"),
+  ncol = 2
+)
+
+gridExtra::grid.arrange(
+  plotReducedDim(sce_not_de_3, dimred = "UMAP", colour_by = "individuo") +
+    ggtitle("Sem correção"),
+  plotReducedDim(sce_not_de_3, dimred = "UMAP_corrected", colour_by = "individuo") +
+    ggtitle("Com correção"),
+  ncol = 2
+)
+```
+
+
+### Com genes DE
+
+
+```{r sim_de_g3}
+set.seed(6969)
+simul_de_3 <- simulate_sce(estimated_parameters = parms_6_samples, 
+                           n_genes = 1000, n_group = 3,
+                           pct_de = 0.4, fc = 6, var_effect = 0.1,
+                           range_n_cells = c(200, 500))
+sce_de_3 <- construct_sce(simul_obj = simul_de_3)
+```
+
+
+```{r, echo=FALSE}
+gridExtra::grid.arrange(
+  plotReducedDim(sce_de_3, dimred = "UMAP", colour_by = "group") +
+    ggtitle("Sem correção"),
+  plotReducedDim(sce_de_3, dimred = "UMAP_corrected", colour_by = "group") +
+    ggtitle("Com correção"),
+  ncol = 2
+)
+
+gridExtra::grid.arrange(
+  plotReducedDim(sce_de_3, dimred = "UMAP", colour_by = "individuo") +
+    ggtitle("Sem correção"),
+  plotReducedDim(sce_de_3, dimred = "UMAP_corrected", colour_by = "individuo") +
+    ggtitle("Com correção"),
+  ncol = 2
+)
+```
